@@ -1,4 +1,4 @@
-SCREEN_SIZE = (1200,800)
+SCREEN_SIZE = (1400,800)
 
 def to_math_coords(point): 
     math_x = point[0] - (SCREEN_SIZE[0] // 2)

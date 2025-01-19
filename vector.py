@@ -6,11 +6,12 @@ class Vector:
         self.pos = pos 
         self.color = color
         self.arrow_size = 20
+        self.width = 3
 
     def draw(self, screen): 
         start_pos = to_screen_coords([0,0])
         end_pos = to_screen_coords(self.pos)
-        pygame.draw.line(screen, self.color, (start_pos[0], start_pos[1]), (end_pos[0], end_pos[1]))
+        pygame.draw.line(screen, self.color, (start_pos[0], start_pos[1]), (end_pos[0], end_pos[1]), self.width)
 
         angle = -math.atan2(self.pos[1], self.pos[0])
 
@@ -21,8 +22,8 @@ class Vector:
                           end_pos[1] - self.arrow_size * math.sin(angle + math.pi / 6))
 
         # Draw the arrowhead
-        pygame.draw.aaline(screen, self.color, end_pos, left_arrowhead, 3)
-        pygame.draw.aaline(screen, self.color, end_pos, right_arrowhead, 3)
+        pygame.draw.line(screen, self.color, end_pos, left_arrowhead, self.width)
+        pygame.draw.line(screen, self.color, end_pos, right_arrowhead, self.width)
 
     def matrix_multiply(self, matrix): 
         A = [
