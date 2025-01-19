@@ -1,5 +1,5 @@
 import pygame
-from globals import SCREEN_SIZE, to_screen_coords
+from globals import SCREEN_SIZE, to_screen_coords, GRAY_COLOR
 import sys
 from vector import Vector
 
@@ -10,37 +10,23 @@ class Canvas:
         self.screen = pygame.display.set_mode(SCREEN_SIZE)
         pygame.display.set_caption("Linear Transformations")
         self.running = True 
+        self.is_paused = False
         self.clock = pygame.time.Clock()
         self.basis_i = Vector([self.unit_length,0], (255,0,0))
         self.basis_j = Vector([0,self.unit_length], (0,255,0))
 
     def draw_fixed_catesian(self): 
-
-        pygame.draw.line(
-            self.screen, 
-            (255,255,255), 
-            (0, SCREEN_SIZE[1] // 2), 
-            (SCREEN_SIZE[0], SCREEN_SIZE[1] // 2),
-            2
-        )
-        pygame.draw.line(
-            self.screen, 
-            (255,255,255), 
-            (SCREEN_SIZE[0] // 2, 0), 
-            (SCREEN_SIZE[0] // 2, SCREEN_SIZE[1]), 
-            2
-        )
         for row in range(0, SCREEN_SIZE[1] // self.unit_length): 
             pygame.draw.aaline(
                 self.screen, 
-                (128,128,128), 
+                GRAY_COLOR, 
                 (0, row * self.unit_length),
                 (SCREEN_SIZE[0], row * self.unit_length)
             )
         for col in range(0, SCREEN_SIZE[0] // self.unit_length): 
             pygame.draw.aaline(
                 self.screen, 
-                (128,128,128), 
+                GRAY_COLOR, 
                 (col * self.unit_length, 0),
                 (col * self.unit_length, SCREEN_SIZE[1])
             )
