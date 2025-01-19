@@ -25,10 +25,6 @@ class Vector:
         pygame.draw.line(screen, self.color, end_pos, left_arrowhead, self.width)
         pygame.draw.line(screen, self.color, end_pos, right_arrowhead, self.width)
 
-    def matrix_multiply(self, matrix): 
-        A = [
-            [0, -1], 
-            [1, 0]
-        ]
-        # for i
+    def get_vector(self): 
+        return self.pos
 
