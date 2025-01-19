@@ -27,4 +27,7 @@ class Vector:
 
     def get_vector(self): 
         return self.pos
+    
+    def set_vector(self, pos): 
+        self.pos = pos
 

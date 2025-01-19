@@ -2,6 +2,8 @@ import pygame
 from globals import SCREEN_SIZE, GRAY_COLOR, matrix_multiply, GREEN_COLOR, RED_COLOR
 import sys
 from vector import Vector
+from matrix import Matrix, RotationMatrix
+import math
 
 class Canvas: 
     def __init__(self): 
@@ -12,16 +14,19 @@ class Canvas:
         self.running = True 
         self.is_paused = False
         self.clock = pygame.time.Clock()
+
+
+        self.matrix_choice = 1
         self.basis_i = Vector([self.unit_length,0], RED_COLOR)
         self.basis_j = Vector([0,self.unit_length], GREEN_COLOR)
-        self.t = 0
+        self.rotation_matrix = RotationMatrix(0,math.pi,0.02)
 
-        self.shear_matrix = [
-            [1, self.t], 
-            [0, 1]
-        ]
-        self.basis_i = Vector(matrix_multiply(self.shear_matrix,self.basis_i.get_vector()), RED_COLOR)
-        self.basis_j = Vector(matrix_multiply(self.shear_matrix,self.basis_j.get_vector()), GREEN_COLOR)
+
+
+    def reset(self): 
+        self.is_paused = True
+        self.basis_i = Vector([self.unit_length,0], RED_COLOR)
+        self.basis_j = Vector([0,self.unit_length], GREEN_COLOR)
 
     def draw_fixed_catesian(self): 
         for row in range(0, SCREEN_SIZE[1] // self.unit_length): 
@@ -40,14 +45,31 @@ class Canvas:
             )
 
     def update(self): 
-        pass
-        # self.t += 0.01
-        # self.basis_i = Vector(matrix_multiply(self.shear_matrix,self.basis_i.get_vector()), RED_COLOR)
-        # self.basis_j = Vector(matrix_multiply(self.shear_matrix,self.basis_j.get_vector()), GREEN_COLOR)
+        if self.is_paused: return 
+
+        match(self.matrix_choice): 
+            case 1: 
+                self.rotation_matrix.update()
+                new_i = matrix_multiply(self.rotation_matrix.get_matrix(), [100, 0])
+                new_j = matrix_multiply(self.rotation_matrix.get_matrix(), [0, 100])
+                self.basis_i.set_vector(new_i)
+                self.basis_j.set_vector(new_j)
+            case __: 
+                pass
+
     def handle_events(self): 
         for event in pygame.event.get(): 
             if event.type == pygame.QUIT: 
                 self.running = False 
+            elif event.type == pygame.KEYDOWN: 
+                if event.key == pygame.K_r: 
+                    self.reset()
+                elif event.key == pygame.K_SPACE: 
+                    self.is_paused = not self.is_paused
+                elif event.key == pygame.K_1 and self.is_paused: 
+                    ### rotation matrix 
+                    pass
+
 
     def render(self): 
         self.screen.fill((0,0,0))
