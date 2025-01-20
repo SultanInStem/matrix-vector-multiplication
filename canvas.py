@@ -52,23 +52,11 @@ class Canvas:
 
     def update(self): 
         if self.is_paused: return 
-
-        match(self.matrix_choice): 
-            case 1: 
-                self.transformations[0].update()
-                new_i = matrix_multiply(self.transformations[0].get_matrix(), [100, 0])
-                new_j = matrix_multiply(self.transformations[0].get_matrix(), [0, 100])
-                self.basis_i.set_vector(new_i)
-                self.basis_j.set_vector(new_j)
-            case 2: 
-                self.transformations[1].update()
-                new_i = matrix_multiply(self.transformations[1].get_matrix(), [100, 0])
-                new_j = matrix_multiply(self.transformations[1].get_matrix(), [0, 100])
-                self.basis_i.set_vector(new_i)
-                self.basis_j.set_vector(new_j)
-
-            case __: 
-                pass
+        self.transformations[self.matrix_choice - 1].update()
+        new_i = matrix_multiply(self.transformations[self.matrix_choice - 1].get_matrix(), [100, 0])
+        new_j = matrix_multiply(self.transformations[self.matrix_choice - 1].get_matrix(), [0, 100])
+        self.basis_i.set_vector(new_i)
+        self.basis_j.set_vector(new_j)
 
     def handle_events(self): 
         for event in pygame.event.get(): 
@@ -80,7 +68,6 @@ class Canvas:
                 elif event.key == pygame.K_SPACE: 
                     self.is_paused = not self.is_paused
                 elif event.key == pygame.K_1 and self.is_paused: 
-                    ### rotation matrix 
                     self.matrix_choice = 1
                 elif event.key == pygame.K_2 and self.is_paused: 
                     self.matrix_choice = 2
