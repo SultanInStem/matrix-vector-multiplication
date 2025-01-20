@@ -2,7 +2,7 @@ import pygame
 from globals import SCREEN_SIZE, GRAY_COLOR, matrix_multiply, GREEN_COLOR, RED_COLOR
 import sys
 from vector import Vector
-from matrix import Matrix, RotationMatrix
+from matrix import Matrix, RotationMatrix, ShearMatrix
 import math
 
 class Canvas: 
@@ -16,10 +16,12 @@ class Canvas:
         self.clock = pygame.time.Clock()
 
 
-        self.matrix_choice = 1
+        self.matrix_choice = 2
         self.basis_i = Vector([self.unit_length,0], RED_COLOR)
         self.basis_j = Vector([0,self.unit_length], GREEN_COLOR)
-        self.rotation_matrix = RotationMatrix(0,math.pi,0.02)
+        self.rotation_matrix = RotationMatrix(0,math.pi,0.3) #1
+        self.shear_matrix = ShearMatrix(0,2,0.01) #2
+
 
 
 
@@ -54,6 +56,13 @@ class Canvas:
                 new_j = matrix_multiply(self.rotation_matrix.get_matrix(), [0, 100])
                 self.basis_i.set_vector(new_i)
                 self.basis_j.set_vector(new_j)
+            case 2: 
+                self.shear_matrix.update()
+                new_i = matrix_multiply(self.shear_matrix.get_matrix(), [100, 0])
+                new_j = matrix_multiply(self.shear_matrix.get_matrix(), [0, 100])
+                self.basis_i.set_vector(new_i)
+                self.basis_j.set_vector(new_j)
+
             case __: 
                 pass
 
