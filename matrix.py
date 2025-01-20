@@ -97,4 +97,7 @@ class RotationShearMatrix(Matrix):
             [math.sin(self.t), self.t * math.sin(self.t) + math.cos(self.t)]  
         ]
 
+    def get_matrix(self): 
+        return self.A
+
         
