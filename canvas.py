@@ -55,6 +55,7 @@ class Canvas:
             )
 
     def draw_dynamic_cartesian(self): 
+        
         pass
 
     def update(self): 
