@@ -78,5 +78,7 @@ class StretchMatrix(Matrix):
             [1 + self.t, 0], 
             [0, 1 + self.t]
         ]
+    def get_matrix(self): 
+        return self.A
     
         
