@@ -19,6 +19,8 @@ class Canvas:
         self.matrix_choice = 1
         self.basis_i = Vector([self.unit_length,0], RED_COLOR)
         self.basis_j = Vector([0,self.unit_length], GREEN_COLOR)
+        self.prev_i = Vector([self.unit_length, 0], RED_COLOR)
+        self.prev_j = Vector([0,self.unit_length], GREEN_COLOR)
         self.transformations = [
             RotationMatrix(0,2 * math.pi,0.01), 
             ShearMatrix(0,2,0.01)
@@ -31,6 +33,8 @@ class Canvas:
         self.is_paused = True
         self.basis_i = Vector([self.unit_length,0], RED_COLOR)
         self.basis_j = Vector([0,self.unit_length], GREEN_COLOR)
+        self.prev_i = Vector([self.unit_length, 0], RED_COLOR)
+        self.prev_j = Vector([0,self.unit_length], GREEN_COLOR)
         for i in range(len(self.transformations)): 
             self.transformations[i].reset()
 
@@ -53,10 +57,15 @@ class Canvas:
     def update(self): 
         if self.is_paused: return 
         self.transformations[self.matrix_choice - 1].update()
-        new_i = matrix_multiply(self.transformations[self.matrix_choice - 1].get_matrix(), [100, 0])
-        new_j = matrix_multiply(self.transformations[self.matrix_choice - 1].get_matrix(), [0, 100])
+        new_i = matrix_multiply(self.transformations[self.matrix_choice - 1].get_matrix(), self.prev_i.get_vector())
+        new_j = matrix_multiply(self.transformations[self.matrix_choice - 1].get_matrix(), self.prev_j.get_vector())
         self.basis_i.set_vector(new_i)
         self.basis_j.set_vector(new_j)
+    def handle_number_click(self):
+        for i in range(len(self.transformations)): 
+            self.transformations[i].reset()
+        self.prev_i.set_vector(self.basis_i.get_vector())
+        self.prev_j.set_vector(self.basis_j.get_vector())
 
     def handle_events(self): 
         for event in pygame.event.get(): 
@@ -67,9 +76,11 @@ class Canvas:
                     self.reset()
                 elif event.key == pygame.K_SPACE: 
                     self.is_paused = not self.is_paused
-                elif event.key == pygame.K_1 and self.is_paused: 
+                elif event.key == pygame.K_1: 
+                    self.handle_number_click()
                     self.matrix_choice = 1
-                elif event.key == pygame.K_2 and self.is_paused: 
+                elif event.key == pygame.K_2: 
+                    self.handle_number_click()
                     self.matrix_choice = 2
 
 
