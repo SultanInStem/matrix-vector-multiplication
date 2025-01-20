@@ -23,8 +23,8 @@ class Canvas:
         self.transformations = [
             RotationMatrix(0,2 * math.pi,0.01), 
             ShearMatrix(0,2,0.01), 
-            SqueezeMatrix(0,2,0.01), 
-            StretchMatrix(0,2,0.01), 
+            SqueezeMatrix(0,1,0.01), 
+            StretchMatrix(0,1,0.01), 
             RotationShearMatrix(0,math.pi,0.01)
         ]
 
