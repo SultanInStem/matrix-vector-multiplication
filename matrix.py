@@ -48,6 +48,23 @@ class ShearMatrix(Matrix):
 
     def get_matrix(self): 
         return self.A
+    
+class SqueezeMatrix(Matrix): 
+    def __init__(self, start_t, end_t, dt):
+        super().__init__(start_t, end_t, dt)
+        self.A = [
+            [self.t, 0], 
+            [0, 1 / (self.t + 1)]
+        ]
 
+    def update(self): 
+        if self.t >= self.end_t: return 
+        self.t += self.dt
+        self.A = [
+            [self.t, 0], 
+            [0, 1 / (self.t + 1)]
+        ]
+    def get_matrix(self): 
+        return self.A
     
         
