@@ -2,7 +2,7 @@ import pygame
 from globals import SCREEN_SIZE, GRAY_COLOR, matrix_multiply, GREEN_COLOR, RED_COLOR
 import sys
 from vector import Vector
-from matrix import RotationMatrix, ShearMatrix, SqueezeMatrix, StretchMatrix
+from matrix import RotationMatrix, ShearMatrix, SqueezeMatrix, StretchMatrix,  RotationShearMatrix
 import math
 class Canvas: 
     def __init__(self): 
@@ -24,7 +24,8 @@ class Canvas:
             RotationMatrix(0,2 * math.pi,0.01), 
             ShearMatrix(0,2,0.01), 
             SqueezeMatrix(0,2,0.01), 
-            StretchMatrix(0,2,0.01) 
+            StretchMatrix(0,2,0.01), 
+            RotationShearMatrix(0,math.pi,0.01)
         ]
 
     def reset(self): 
