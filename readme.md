@@ -1,8 +1,10 @@
 # Visualization of Linear Transformations 
 
+## Motivation
 
-r - for reset 
-p - for pause 
+
+## Controls 
+- R: resets the animation
 
 
 1 - rotation matrix (continious)
