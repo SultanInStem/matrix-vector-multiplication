@@ -14,7 +14,6 @@ class Canvas:
         self.is_paused = False
         self.clock = pygame.time.Clock()
 
-
         self.matrix_choice = 1
         self.basis_i = Vector([self.unit_length,0], RED_COLOR)
         self.basis_j = Vector([0,self.unit_length], GREEN_COLOR)
@@ -55,7 +54,6 @@ class Canvas:
             )
 
     def draw_dynamic_cartesian(self): 
-        
         pass
 
     def update(self): 
