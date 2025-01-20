@@ -5,6 +5,8 @@ class Matrix:
         self.end_t = end_t 
         self.t = start_t
         self.dt = dt
+    def reset(self): 
+        self.t = self.start_t
 
 
 

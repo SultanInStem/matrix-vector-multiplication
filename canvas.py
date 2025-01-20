@@ -19,8 +19,10 @@ class Canvas:
         self.matrix_choice = 2
         self.basis_i = Vector([self.unit_length,0], RED_COLOR)
         self.basis_j = Vector([0,self.unit_length], GREEN_COLOR)
-        self.rotation_matrix = RotationMatrix(0,math.pi,0.3) #1
-        self.shear_matrix = ShearMatrix(0,2,0.01) #2
+        self.transformations = [
+            RotationMatrix(0,math.pi,0.3), 
+            ShearMatrix(0,2,0.01)
+        ]
 
 
 
@@ -29,6 +31,8 @@ class Canvas:
         self.is_paused = True
         self.basis_i = Vector([self.unit_length,0], RED_COLOR)
         self.basis_j = Vector([0,self.unit_length], GREEN_COLOR)
+        for i in range(len(self.transformations)): 
+            self.transformations[i].reset()
 
     def draw_fixed_catesian(self): 
         for row in range(0, SCREEN_SIZE[1] // self.unit_length): 
@@ -51,15 +55,15 @@ class Canvas:
 
         match(self.matrix_choice): 
             case 1: 
-                self.rotation_matrix.update()
-                new_i = matrix_multiply(self.rotation_matrix.get_matrix(), [100, 0])
-                new_j = matrix_multiply(self.rotation_matrix.get_matrix(), [0, 100])
+                self.transformations[0].update()
+                new_i = matrix_multiply(self.transformations[0].get_matrix(), [100, 0])
+                new_j = matrix_multiply(self.transformations[0].get_matrix(), [0, 100])
                 self.basis_i.set_vector(new_i)
                 self.basis_j.set_vector(new_j)
             case 2: 
-                self.shear_matrix.update()
-                new_i = matrix_multiply(self.shear_matrix.get_matrix(), [100, 0])
-                new_j = matrix_multiply(self.shear_matrix.get_matrix(), [0, 100])
+                self.transformations[1].update()
+                new_i = matrix_multiply(self.transformations[1].get_matrix(), [100, 0])
+                new_j = matrix_multiply(self.transformations[1].get_matrix(), [0, 100])
                 self.basis_i.set_vector(new_i)
                 self.basis_j.set_vector(new_j)
 
