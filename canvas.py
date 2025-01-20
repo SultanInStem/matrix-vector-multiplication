@@ -2,9 +2,8 @@ import pygame
 from globals import SCREEN_SIZE, GRAY_COLOR, matrix_multiply, GREEN_COLOR, RED_COLOR
 import sys
 from vector import Vector
-from matrix import RotationMatrix, ShearMatrix, SqueezeMatrix
+from matrix import RotationMatrix, ShearMatrix, SqueezeMatrix, StretchMatrix
 import math
-
 class Canvas: 
     def __init__(self): 
         pygame.init()
@@ -24,7 +23,8 @@ class Canvas:
         self.transformations = [
             RotationMatrix(0,2 * math.pi,0.01), 
             ShearMatrix(0,2,0.01), 
-            SqueezeMatrix(0,2,0.01)
+            SqueezeMatrix(0,2,0.01), 
+            StretchMatrix(0,2,0.01) 
         ]
 
     def reset(self): 
@@ -60,7 +60,7 @@ class Canvas:
         new_j = matrix_multiply(self.transformations[self.matrix_choice - 1].get_matrix(), self.prev_j.get_vector())
         self.basis_i.set_vector(new_i)
         self.basis_j.set_vector(new_j)
-        
+
     def handle_number_click(self):
         for i in range(len(self.transformations)): 
             self.transformations[i].reset()
@@ -85,6 +85,12 @@ class Canvas:
                 elif event.key == pygame.K_3: 
                     self.handle_number_click()
                     self.matrix_choice = 3
+                elif event.key == pygame.K_4: 
+                    self.handle_number_click()
+                    self.matrix_choice = 4
+                elif event.key == pygame.K_5: 
+                    self.handle_number_click()
+                    self.matrix_choice = 5
 
 
 
