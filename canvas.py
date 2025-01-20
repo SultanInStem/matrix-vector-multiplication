@@ -27,9 +27,6 @@ class Canvas:
             SqueezeMatrix(0,2,0.01)
         ]
 
-
-
-
     def reset(self): 
         self.is_paused = True
         self.matrix_choice = 1
@@ -63,6 +60,7 @@ class Canvas:
         new_j = matrix_multiply(self.transformations[self.matrix_choice - 1].get_matrix(), self.prev_j.get_vector())
         self.basis_i.set_vector(new_i)
         self.basis_j.set_vector(new_j)
+        
     def handle_number_click(self):
         for i in range(len(self.transformations)): 
             self.transformations[i].reset()

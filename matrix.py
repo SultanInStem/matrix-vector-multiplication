@@ -9,8 +9,6 @@ class Matrix:
         self.t = self.start_t
 
 
-
-
 class RotationMatrix(Matrix): 
     def __init__(self,start_t, end_t, dt): 
         super().__init__(start_t, end_t, dt)
@@ -52,7 +50,7 @@ class SqueezeMatrix(Matrix):
     def __init__(self, start_t, end_t, dt):
         super().__init__(start_t, end_t, dt)
         self.A = [
-            [1 + self.t, 0], 
+            [1 / (self.t + 1), 0], 
             [0, 1 / (self.t + 1)]
         ]
 
@@ -60,10 +58,25 @@ class SqueezeMatrix(Matrix):
         if self.t >= self.end_t: return 
         self.t += self.dt
         self.A = [
-            [1 + self.t, 0], 
+            [1 / (self.t + 1), 0], 
             [0, 1 / (self.t + 1)]
         ]
     def get_matrix(self): 
         return self.A
+    
+class StretchMatrix(Matrix): 
+    def __init__(self, start_t, end_t, dt):
+        super().__init__(start_t, end_t, dt)
+        self.A = [
+            [1 + self.t, 0], 
+            [0, 1 + self.t]
+        ]
+    def update(self): 
+        if self.t >= self.end_t: return 
+        self.t += self.dt 
+        self.A = [
+            [1 + self.t, 0], 
+            [0, 1 + self.t]
+        ]
     
         
