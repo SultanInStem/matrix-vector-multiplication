@@ -32,6 +32,7 @@ class Canvas:
 
     def reset(self): 
         self.is_paused = True
+        self.matrix_choice = 1
         self.basis_i = Vector([self.unit_length,0], RED_COLOR)
         self.basis_j = Vector([0,self.unit_length], GREEN_COLOR)
         self.prev_i = Vector([self.unit_length, 0], RED_COLOR)

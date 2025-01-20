@@ -19,7 +19,6 @@ class RotationMatrix(Matrix):
             [math.sin(self.t), math.cos(self.t)]    
         ]
     def update(self): 
-        print(self.t)
         if self.t >= self.end_t: return
         self.t += self.dt 
         self.A = [
@@ -53,7 +52,7 @@ class SqueezeMatrix(Matrix):
     def __init__(self, start_t, end_t, dt):
         super().__init__(start_t, end_t, dt)
         self.A = [
-            [self.t, 0], 
+            [1 + self.t, 0], 
             [0, 1 / (self.t + 1)]
         ]
 
@@ -61,7 +60,7 @@ class SqueezeMatrix(Matrix):
         if self.t >= self.end_t: return 
         self.t += self.dt
         self.A = [
-            [self.t, 0], 
+            [1 + self.t, 0], 
             [0, 1 / (self.t + 1)]
         ]
     def get_matrix(self): 
