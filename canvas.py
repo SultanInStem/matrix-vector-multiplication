@@ -37,8 +37,8 @@ class Canvas:
         self.prev_j = Vector([0,self.unit_length], GREEN_COLOR)
         for i in range(len(self.transformations)): 
             self.transformations[i].reset()
-
-    def draw_fixed_catesian(self): 
+    
+    def draw_fixed_cartesian(self): 
         for row in range(0, SCREEN_SIZE[1] // self.unit_length): 
             pygame.draw.aaline(
                 self.screen, 
@@ -53,6 +53,9 @@ class Canvas:
                 (col * self.unit_length, 0),
                 (col * self.unit_length, SCREEN_SIZE[1])
             )
+
+    def draw_dynamic_cartesian(self): 
+        pass
 
     def update(self): 
         if self.is_paused: return 
@@ -97,7 +100,7 @@ class Canvas:
 
     def render(self): 
         self.screen.fill((0,0,0))
-        self.draw_fixed_catesian()
+        self.draw_fixed_cartesian()
 
         self.basis_i.draw(self.screen)
         self.basis_j.draw(self.screen)
