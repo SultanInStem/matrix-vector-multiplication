@@ -52,17 +52,9 @@ class Canvas:
             )
 
     def draw_dynamic_cartesian(self): 
-        
         for i in range(len(self.fixed_grid_lines)): 
-            v0 = self.fixed_grid_lines[i][0] 
-            vf = self.fixed_grid_lines[i][1]
-            # v0 =
-            pygame.draw.aaline(
-                self.screen, 
-                BLUE_COLOR, 
-                (self.fixed_grid_lines[i][0][0], self.fixed_grid_lines[i][0][1]),
-                (self.fixed_grid_lines[i][1][0], self.fixed_grid_lines[i][1][1])
-            )
+            basis_i = Vector(self.basis_i.get_vector(), (0,0,0))
+            basis_j = Vector(self.basis_j.get_vector(), (0,0,0))
 
     def update(self): 
         if self.is_paused: return 
