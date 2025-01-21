@@ -1,5 +1,5 @@
 import pygame
-from globals import SCREEN_SIZE, GRAY_COLOR, matrix_multiply, GREEN_COLOR, RED_COLOR, BLUE_COLOR
+from globals import SCREEN_SIZE, GRAY_COLOR, matrix_multiply, GREEN_COLOR, RED_COLOR, BLUE_COLOR, to_screen_coords
 import sys
 from vector import Vector
 from matrix import RotationMatrix, ShearMatrix, SqueezeMatrix, StretchMatrix,  RotationShearMatrix
@@ -43,14 +43,13 @@ class Canvas:
             self.transformations[i].reset()
     
     def draw_fixed_cartesian(self): 
-        pass
-        # for i in range(len(self.fixed_grid_lines)): 
-            # pygame.draw.aaline(
-                # self.screen, 
-                # GRAY_COLOR,
-                # (self.fixed_grid_lines[i][0][0], self.fixed_grid_lines[i][0][1]),
-                # (self.fixed_grid_lines[i][1][0], self.fixed_grid_lines[i][1][1])
-            # )
+        for i in range(len(self.fixed_grid_lines)): 
+            pygame.draw.aaline(
+                self.screen, 
+                GRAY_COLOR,
+                (self.fixed_grid_lines[i][0][0], self.fixed_grid_lines[i][0][1]),
+                (self.fixed_grid_lines[i][1][0], self.fixed_grid_lines[i][1][1])
+            )
 
     def draw_dynamic_cartesian(self): 
         for i in range(len(self.fixed_grid_lines)): 
@@ -61,11 +60,13 @@ class Canvas:
 
             initial_pos = basis_i.scalar_mul(initial_pos.get_vector()[0]) + basis_j.scalar_mul(initial_pos.get_vector()[1])
             final_pos = basis_i.scalar_mul(final_pos.get_vector()[0]) + basis_j.scalar_mul(final_pos.get_vector()[1])
+            initial_pos = to_screen_coords((initial_pos.get_vector()[0], initial_pos.get_vector()[1]))
+            final_pos = to_screen_coords((final_pos.get_vector()[0], final_pos.get_vector()[1]))
             pygame.draw.aaline(
                 self.screen, 
                 BLUE_COLOR,
-                (initial_pos.get_vector()[0], initial_pos.get_vector()[1]) ,
-                (final_pos.get_vector()[0], final_pos.get_vector()[1])
+                (initial_pos[0], initial_pos[1]) ,
+                (final_pos[0], final_pos[1])
             )
 
     def update(self): 
