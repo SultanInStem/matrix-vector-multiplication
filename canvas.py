@@ -26,6 +26,11 @@ class Canvas:
             StretchMatrix(0,1,0.01), 
             RotationShearMatrix(0,math.pi,0.01)
         ]
+        self.grid_lines = []
+        for row in range(SCREEN_SIZE[1] // self.unit_length):
+            self.grid_lines.append([[0, row * self.unit_length], [SCREEN_SIZE[0], row * self.unit_length]]) 
+        for col in range(SCREEN_SIZE[0] // self.unit_length): 
+            self.grid_lines.append([[col * self.unit_length, 0], [col * self.unit_length, SCREEN_SIZE[1]]])
 
     def reset(self): 
         self.is_paused = True
@@ -54,7 +59,13 @@ class Canvas:
             )
 
     def draw_dynamic_cartesian(self): 
-        pass
+        for i in range(len(self.grid_lines)): 
+            pygame.draw.aaline(
+                self.screen, 
+                (0,0,221),
+                (self.grid_lines[i][0][0], self.grid_lines[i][0][1]),
+                (self.grid_lines[i][1][0], self.grid_lines[i][1][1])
+            )
 
     def update(self): 
         if self.is_paused: return 
@@ -63,6 +74,9 @@ class Canvas:
         new_j = matrix_multiply(self.transformations[self.matrix_choice - 1].get_matrix(), self.prev_j.get_vector())
         self.basis_i.set_vector(new_i)
         self.basis_j.set_vector(new_j)
+
+
+
 
     def handle_number_click(self):
         for i in range(len(self.transformations)): 
@@ -100,6 +114,7 @@ class Canvas:
     def render(self): 
         self.screen.fill((0,0,0))
         self.draw_fixed_cartesian()
+        self.draw_dynamic_cartesian()
 
         self.basis_i.draw(self.screen)
         self.basis_j.draw(self.screen)
