@@ -2,7 +2,7 @@ import pygame
 import math
 from globals import to_screen_coords
 class Vector: 
-    def __init__(self, pos, color):
+    def __init__(self, pos, color=(255,255,255)):
         self.pos = pos 
         self.color = color
         self.arrow_size = 20
@@ -29,7 +29,7 @@ class Vector:
         if not isinstance(other, Vector):
             raise TypeError("Operand must be an instance of Vector")
         v = other.get_vector()
-        return Vector(self.pos[0] + v[0], self.pos[1] + v[1])
+        return Vector([self.pos[0] + v[0], self.pos[1] + v[1]])
     
     def scalar_mul(self, scalar): 
         res = [x * scalar for x in self.pos]

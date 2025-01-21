@@ -43,18 +43,30 @@ class Canvas:
             self.transformations[i].reset()
     
     def draw_fixed_cartesian(self): 
-        for i in range(len(self.fixed_grid_lines)): 
-            pygame.draw.aaline(
-                self.screen, 
-                GRAY_COLOR,
-                (self.fixed_grid_lines[i][0][0], self.fixed_grid_lines[i][0][1]),
-                (self.fixed_grid_lines[i][1][0], self.fixed_grid_lines[i][1][1])
-            )
+        pass
+        # for i in range(len(self.fixed_grid_lines)): 
+            # pygame.draw.aaline(
+                # self.screen, 
+                # GRAY_COLOR,
+                # (self.fixed_grid_lines[i][0][0], self.fixed_grid_lines[i][0][1]),
+                # (self.fixed_grid_lines[i][1][0], self.fixed_grid_lines[i][1][1])
+            # )
 
     def draw_dynamic_cartesian(self): 
         for i in range(len(self.fixed_grid_lines)): 
-            basis_i = Vector(self.basis_i.get_vector(), (0,0,0))
-            basis_j = Vector(self.basis_j.get_vector(), (0,0,0))
+            basis_i = Vector(self.basis_i.get_vector())
+            basis_j = Vector(self.basis_j.get_vector())
+            initial_pos = Vector(self.fixed_grid_lines[i][0])
+            final_pos = Vector(self.fixed_grid_lines[i][1])
+
+            initial_pos = basis_i.scalar_mul(initial_pos.get_vector()[0]) + basis_j.scalar_mul(initial_pos.get_vector()[1])
+            final_pos = basis_i.scalar_mul(final_pos.get_vector()[0]) + basis_j.scalar_mul(final_pos.get_vector()[1])
+            pygame.draw.aaline(
+                self.screen, 
+                BLUE_COLOR,
+                (initial_pos.get_vector()[0], initial_pos.get_vector()[1]) ,
+                (final_pos.get_vector()[0], final_pos.get_vector()[1])
+            )
 
     def update(self): 
         if self.is_paused: return 
