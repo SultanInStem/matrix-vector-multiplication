@@ -1,5 +1,5 @@
 import pygame
-from globals import SCREEN_SIZE, GRAY_COLOR, matrix_multiply, GREEN_COLOR, RED_COLOR
+from globals import SCREEN_SIZE, GRAY_COLOR, matrix_multiply, GREEN_COLOR, RED_COLOR, BLUE_COLOR
 import sys
 from vector import Vector
 from matrix import RotationMatrix, ShearMatrix, SqueezeMatrix, StretchMatrix,  RotationShearMatrix
@@ -26,11 +26,11 @@ class Canvas:
             StretchMatrix(0,1,0.01), 
             RotationShearMatrix(0,math.pi,0.01)
         ]
-        self.grid_lines = []
+        self.fixed_grid_lines = []
         for row in range(SCREEN_SIZE[1] // self.unit_length):
-            self.grid_lines.append([[0, row * self.unit_length], [SCREEN_SIZE[0], row * self.unit_length]]) 
+            self.fixed_grid_lines.append([[0, row * self.unit_length], [SCREEN_SIZE[0], row * self.unit_length]]) 
         for col in range(SCREEN_SIZE[0] // self.unit_length): 
-            self.grid_lines.append([[col * self.unit_length, 0], [col * self.unit_length, SCREEN_SIZE[1]]])
+            self.fixed_grid_lines.append([[col * self.unit_length, 0], [col * self.unit_length, SCREEN_SIZE[1]]])
 
     def reset(self): 
         self.is_paused = True
@@ -43,28 +43,22 @@ class Canvas:
             self.transformations[i].reset()
     
     def draw_fixed_cartesian(self): 
-        for row in range(0, SCREEN_SIZE[1] // self.unit_length): 
+        for i in range(len(self.fixed_grid_lines)): 
             pygame.draw.aaline(
                 self.screen, 
-                GRAY_COLOR, 
-                (0, row * self.unit_length),
-                (SCREEN_SIZE[0], row * self.unit_length)
-            )
-        for col in range(0, SCREEN_SIZE[0] // self.unit_length): 
-            pygame.draw.aaline(
-                self.screen, 
-                GRAY_COLOR, 
-                (col * self.unit_length, 0),
-                (col * self.unit_length, SCREEN_SIZE[1])
+                GRAY_COLOR,
+                (self.fixed_grid_lines[i][0][0], self.fixed_grid_lines[i][0][1]),
+                (self.fixed_grid_lines[i][1][0], self.fixed_grid_lines[i][1][1])
             )
 
     def draw_dynamic_cartesian(self): 
-        for i in range(len(self.grid_lines)): 
+        
+        for i in range(len(self.fixed_grid_lines)): 
             pygame.draw.aaline(
                 self.screen, 
-                (0,0,221),
-                (self.grid_lines[i][0][0], self.grid_lines[i][0][1]),
-                (self.grid_lines[i][1][0], self.grid_lines[i][1][1])
+                BLUE_COLOR, 
+                (self.fixed_grid_lines[i][0][0], self.fixed_grid_lines[i][0][1]),
+                (self.fixed_grid_lines[i][1][0], self.fixed_grid_lines[i][1][1])
             )
 
     def update(self): 

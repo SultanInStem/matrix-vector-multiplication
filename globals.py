@@ -2,6 +2,7 @@ SCREEN_SIZE = (1400,800)
 GRAY_COLOR = (128,128,128)
 GREEN_COLOR = (144, 238, 144)
 RED_COLOR = (240, 128, 128)
+BLUE_COLOR = (0,71,171)
 
 def to_math_coords(point): 
     math_x = point[0] - (SCREEN_SIZE[0] // 2)
