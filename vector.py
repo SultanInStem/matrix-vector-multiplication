@@ -25,6 +25,12 @@ class Vector:
         pygame.draw.line(screen, self.color, end_pos, left_arrowhead, self.width)
         pygame.draw.line(screen, self.color, end_pos, right_arrowhead, self.width)
 
+    def __add__(self, other): 
+        if not isinstance(other, Vector):
+            raise TypeError("Operand must be an instance of Vector")
+        v = other.get_vector()
+        return Vector(self.pos[0] + v[0], self.pos[1] + v[1])
+
     def get_vector(self): 
         return self.pos
     

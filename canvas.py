@@ -54,6 +54,9 @@ class Canvas:
     def draw_dynamic_cartesian(self): 
         
         for i in range(len(self.fixed_grid_lines)): 
+            v0 = self.fixed_grid_lines[i][0] 
+            vf = self.fixed_grid_lines[i][1]
+            # v0 =
             pygame.draw.aaline(
                 self.screen, 
                 BLUE_COLOR, 
