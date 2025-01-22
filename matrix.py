@@ -50,35 +50,35 @@ class ShearMatrix(Matrix):
 class SqueezeMatrix(Matrix): 
     def __init__(self, start_t, end_t, dt):
         super().__init__(start_t, end_t, dt)
-        self.A = [
+        self.A = np.array([
             [1 / (self.t + 1), 0], 
             [0, 1 / (self.t + 1)]
-        ]
+        ])
 
     def update(self): 
         if self.t >= self.end_t: return 
         self.t += self.dt
-        self.A = [
+        self.A = np.array([
             [1 / (self.t + 1), 0], 
             [0, 1 / (self.t + 1)]
-        ]
+        ])
     def get_matrix(self): 
         return self.A
     
 class StretchMatrix(Matrix): 
     def __init__(self, start_t, end_t, dt):
         super().__init__(start_t, end_t, dt)
-        self.A = [
+        self.A = np.array([
             [1 + self.t, 0], 
             [0, 1 + self.t]
-        ]
+        ])
     def update(self): 
         if self.t >= self.end_t: return 
         self.t += self.dt 
-        self.A = [
+        self.A = np.array([
             [1 + self.t, 0], 
             [0, 1 + self.t]
-        ]
+        ])
     def get_matrix(self): 
         return self.A
     
@@ -86,17 +86,17 @@ class StretchMatrix(Matrix):
 class RotationShearMatrix(Matrix): 
     def __init__(self, start_t, end_t, dt):
         super().__init__(start_t, end_t, dt)
-        self.A = [ 
+        self.A = np.array([ 
             [math.cos(self.t), self.t * math.cos(self.t) - math.sin(self.t)], 
             [math.sin(self.t), self.t * math.sin(self.t) + math.cos(self.t)]  
-        ]
+        ])
     def update(self): 
         if self.t >= self.end_t: return 
         self.t += self.dt
-        self.A = [ 
+        self.A = np.array([ 
             [math.cos(self.t), self.t * math.cos(self.t) - math.sin(self.t)], 
             [math.sin(self.t), self.t * math.sin(self.t) + math.cos(self.t)]  
-        ]
+        ])
 
     def get_matrix(self): 
         return self.A
