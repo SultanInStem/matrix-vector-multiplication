@@ -52,7 +52,16 @@ class Canvas:
             )
 
     def draw_dynamic_cartesian(self): 
-        pass
+        num_lines = 10
+        for n in range(-num_lines, num_lines + 1):
+            start = origin + n * j_hat - num_lines * i_hat
+            end = origin + n * j_hat + num_lines * i_hat
+            pygame.draw.line(screen, (0, 0, 0), start, end, 1)
+
+        for m in range(-num_lines, num_lines + 1):
+            start = origin + m * i_hat - num_lines * j_hat
+            end = origin + m * i_hat + num_lines * j_hat
+            pygame.draw.line(screen, (0, 0, 0), start, end, 1)
 
     def update(self): 
         if self.is_paused: return 

@@ -1,7 +1,7 @@
 # Visualization of Linear Transformations 
 
 ## Motivation
-
+I was inspired by the 3blue1brown youtube series about Linear Algebra. Since I am currently taking this course, I decided to strengthen my knowledge about linear transformations by making this interactive project. 
 
 ## Controls 
 - R: resets the animation
