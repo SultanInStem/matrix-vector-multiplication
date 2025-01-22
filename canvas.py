@@ -1,5 +1,5 @@
 import pygame
-from globals import SCREEN_SIZE, GRAY_COLOR, matrix_multiply, GREEN_COLOR, RED_COLOR, BLUE_COLOR, to_screen_coords
+from globals import SCREEN_SIZE, GRAY_COLOR, GREEN_COLOR, RED_COLOR, BLUE_COLOR, to_screen_coords
 import sys
 from vector import Vector
 from matrix import RotationMatrix, ShearMatrix, SqueezeMatrix, StretchMatrix,  RotationShearMatrix
@@ -60,8 +60,9 @@ class Canvas:
     def update(self): 
         if self.is_paused: return 
         self.transformations[self.matrix_choice - 1].update()
-        new_i = matrix_multiply(self.transformations[self.matrix_choice - 1].get_matrix(), self.prev_i.get_vector())
-        new_j = matrix_multiply(self.transformations[self.matrix_choice - 1].get_matrix(), self.prev_j.get_vector())
+        matrix = self.transformations[self.matrix_choice - 1].get_matrix()
+        new_i = np.dot(matrix, self.prev_i.get_vector())
+        new_j = np.dot(matrix, self.prev_j.get_vector())
         self.basis_i.set_vector(new_i)
         self.basis_j.set_vector(new_j)
 
