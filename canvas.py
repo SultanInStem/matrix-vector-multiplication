@@ -21,7 +21,7 @@ class Canvas:
         self.prev_i = Vector(np.array([self.unit_length, 0]), RED_COLOR)
         self.prev_j = Vector(np.array([0,self.unit_length]), GREEN_COLOR)
         self.transformations = [
-            RotationMatrix(0,2 * math.pi,0.01), 
+            RotationMatrix(0,2 * math.pi,-0.01), 
             ShearMatrix(0,2,0.01), 
             SqueezeMatrix(0,1,0.01), 
             StretchMatrix(0,1,0.01), 
@@ -116,7 +116,7 @@ class Canvas:
     def render(self): 
         self.screen.fill((0,0,0))
         self.draw_fixed_cartesian()
-        self.draw_dynamic_cartesian()
+        # self.draw_dynamic_cartesian()
 
         self.basis_i.draw(self.screen)
         self.basis_j.draw(self.screen)
