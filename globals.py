@@ -23,3 +23,5 @@ def matrix_multiply(matrix, v):
             v_prime[row] += matrix[row][col] * v[col]
     return np.array(v_prime)
 
+    
+
