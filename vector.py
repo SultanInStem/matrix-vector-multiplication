@@ -29,11 +29,10 @@ class Vector:
         if not isinstance(other, Vector):
             raise TypeError("Operand must be an instance of Vector")
         v = other.get_vector()
-        return Vector([self.pos[0] + v[0], self.pos[1] + v[1]])
+        return (self.pos + v)
     
     def scalar_mul(self, scalar): 
-        res = [x * scalar for x in self.pos]
-        return Vector(res, self.color)
+        self.pos = self.pos * scalar 
 
 
     def get_vector(self): 

@@ -4,6 +4,7 @@ import sys
 from vector import Vector
 from matrix import RotationMatrix, ShearMatrix, SqueezeMatrix, StretchMatrix,  RotationShearMatrix
 import math
+import numpy as np
 class Canvas: 
     def __init__(self): 
         pygame.init()
@@ -15,10 +16,10 @@ class Canvas:
         self.clock = pygame.time.Clock()
 
         self.matrix_choice = 1
-        self.basis_i = Vector([self.unit_length,0], RED_COLOR)
-        self.basis_j = Vector([0,self.unit_length], GREEN_COLOR)
-        self.prev_i = Vector([self.unit_length, 0], RED_COLOR)
-        self.prev_j = Vector([0,self.unit_length], GREEN_COLOR)
+        self.basis_i = Vector(np.array([self.unit_length,0]), RED_COLOR)
+        self.basis_j = Vector(np.array([0,self.unit_length]), GREEN_COLOR)
+        self.prev_i = Vector(np.array([self.unit_length, 0]), RED_COLOR)
+        self.prev_j = Vector(np.array([0,self.unit_length]), GREEN_COLOR)
         self.transformations = [
             RotationMatrix(0,2 * math.pi,0.01), 
             ShearMatrix(0,2,0.01), 
@@ -35,10 +36,10 @@ class Canvas:
     def reset(self): 
         self.is_paused = True
         self.matrix_choice = 1
-        self.basis_i = Vector([self.unit_length,0], RED_COLOR)
-        self.basis_j = Vector([0,self.unit_length], GREEN_COLOR)
-        self.prev_i = Vector([self.unit_length, 0], RED_COLOR)
-        self.prev_j = Vector([0,self.unit_length], GREEN_COLOR)
+        self.basis_i = Vector(np.array([self.unit_length,0]), RED_COLOR)
+        self.basis_j = Vector(np.array([0,self.unit_length]), GREEN_COLOR)
+        self.prev_i = Vector(np.array([self.unit_length, 0]), RED_COLOR)
+        self.prev_j = Vector(np.array([0,self.unit_length]), GREEN_COLOR)
         for i in range(len(self.transformations)): 
             self.transformations[i].reset()
     
@@ -52,16 +53,21 @@ class Canvas:
             )
 
     def draw_dynamic_cartesian(self): 
-        num_lines = 10
-        for n in range(-num_lines, num_lines + 1):
-            start = origin + n * j_hat - num_lines * i_hat
-            end = origin + n * j_hat + num_lines * i_hat
-            pygame.draw.line(screen, (0, 0, 0), start, end, 1)
+        num_lines = 20
+        origin = np.array([SCREEN_SIZE[0] // 2, SCREEN_SIZE[1] // 2])
+        i_hat = self.basis_i.get_vector()
+        j_hat = self.basis_j.get_vector()
+
+
+        # for n in range(-num_lines, num_lines + 1):
+        #     start = origin + (n * j_hat) + (num_lines * i_hat)
+        #     end = origin + (n * j_hat) - (num_lines * i_hat)
+        #     pygame.draw.line(self.screen, RED_COLOR, start, end, 1)
 
         for m in range(-num_lines, num_lines + 1):
-            start = origin + m * i_hat - num_lines * j_hat
-            end = origin + m * i_hat + num_lines * j_hat
-            pygame.draw.line(screen, (0, 0, 0), start, end, 1)
+            start = origin - (m * i_hat) + (num_lines * j_hat)
+            end = origin - (m * i_hat) - (num_lines * j_hat)
+            pygame.draw.line(self.screen, GREEN_COLOR, start, end, 1)
 
     def update(self): 
         if self.is_paused: return 

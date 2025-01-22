@@ -1,3 +1,4 @@
+import numpy as np
 SCREEN_SIZE = (1400,800)
 GRAY_COLOR = (128,128,128)
 GREEN_COLOR = (144, 238, 144)
@@ -20,5 +21,5 @@ def matrix_multiply(matrix, v):
     for row in range(len(matrix)): 
         for col in range(len(v)): 
             v_prime[row] += matrix[row][col] * v[col]
-    return v_prime
+    return np.array(v_prime)
 
